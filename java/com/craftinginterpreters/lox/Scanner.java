@@ -77,7 +77,23 @@ class Scanner {
                       addToken(match('=') ? GREATER_EQUAL : GREATER);
                       break;
             case '/':
-                      if (match('/')) {
+                      if (match('*')) { // C-style comments
+                          int commentNestingDepth = 1;
+                          // Count the number of nested "/*"
+                          while (!isAtEnd() && peekNext() != '\0' && !(peek() == '*' && peekNext() == '/')) {
+                                if (peek() == '\n') line++;
+                                if (peek() == '/' && peekNext() == '*') commentNestingDepth++;
+                                advance();
+                          }
+
+                          while (!isAtEnd() && commentNestingDepth > 0) {
+                              if (peek() == '*' && peekNext() == '/') {
+                                  commentNestingDepth--;
+                                  advance();
+                              }
+                              advance();
+                          }
+                      } else if (match('/')) {
                           // A comment goes until the end of the line.
                           while (peek() != '\n' && !isAtEnd()) advance();
                       } else {
