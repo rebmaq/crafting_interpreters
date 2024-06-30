@@ -2,6 +2,5 @@
 
 
 script_dir=$(dirname "$0")
-echo ${script_dir}
 java -cp ${script_dir}/build/java com.craftinginterpreters.lox.Lox $@
 
