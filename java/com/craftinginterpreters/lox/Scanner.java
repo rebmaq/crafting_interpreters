@@ -79,13 +79,13 @@ class Scanner {
             case '/':
                       if (match('*')) { // C-style comments
                           int commentNestingDepth = 1;
-                          // Count the number of nested "/*"
+                          // Count the number of nested "/*" until we reach a "*/"
                           while (!isAtEnd() && peekNext() != '\0' && !(peek() == '*' && peekNext() == '/')) {
                                 if (peek() == '\n') line++;
                                 if (peek() == '/' && peekNext() == '*') commentNestingDepth++;
                                 advance();
                           }
-
+                          // While we haven't seen commentNestingDepth number of "*/" advance()
                           while (!isAtEnd() && commentNestingDepth > 0) {
                               if (peek() == '*' && peekNext() == '/') {
                                   commentNestingDepth--;
