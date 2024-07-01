@@ -7,4 +7,7 @@ jlox:
 	@ mkdir -p ${BUILD_DIR}/java
 	@ javac -d ${BUILD_DIR}/java java/com/craftinginterpreters/lox/*.java
 
-.PHONY: clean jlox
+generate_ast:
+	@ javac -d ${BUILD_DIR}/java java/com/craftinginterpreters/tool/*.java
+
+.PHONY: clean jlox generate_ast
